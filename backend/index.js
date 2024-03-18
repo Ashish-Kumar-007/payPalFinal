@@ -6,7 +6,14 @@ require("dotenv").config();
 const port = 3001;
 const ABI = require("./abi.json");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://paypal-app.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    headers: ["Authorization", "Content-Type"],
+  })
+);
 app.use(express.json());
 
 function convertArrayToObjects(arr) {
@@ -27,7 +34,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const response = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "Your Smart Contract",
+    address: "0x61E05990393693287D829363e2271D370b5F8af3",
     functionName: "getMyName",
     abi: ABI,
     params: { _user: userAddress },
@@ -52,7 +59,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fourResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "Your Smart Contract",
+    address: "0x61E05990393693287D829363e2271D370b5F8af3",
     functionName: "getMyHistory",
     abi: ABI,
     params: { _user: userAddress },
@@ -63,7 +70,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fiveResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "Your Smart Contract",
+    address: "0x61E05990393693287D829363e2271D370b5F8af3",
     functionName: "getMyRequests",
     abi: ABI,
     params: { _user: userAddress },
