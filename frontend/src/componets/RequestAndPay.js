@@ -18,12 +18,12 @@ function RequestAndPay({ requests, getNameAndBalance }) {
   const {address} = useAccount();
   const [payModal, setPayModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
-  const [requestAmount, setRequestAmount] = useState(5);
+  const [requestAmount, setRequestAmount] = useState();
   const [requestAddress, setRequestAddress] = useState("");
   const [requestMessage, setRequestMessage] = useState("");
   const[isRequested, setIsRquested]= useState(false);
   const [isRequestSuccess, setIsRequestSuccess] = useState(false);
-
+  const contractAddr = "0xe6445AdF1B0a2286b20B6C726F99A3BE889346Dc"
   // const setupWeb3 = async () => {
   //   const Web3 = require("web3");
   //   if (window.ethereum) {
@@ -36,7 +36,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
     const web3 = new Web3(window.ethereum); 
     const contract = new web3.eth.Contract(
       ABI,
-      "0x61E05990393693287D829363e2271D370b5F8af3"
+      contractAddr
     );
     const requestAmountInWei = web3.utils.toWei(requestAmount.toString(), "ether")
     await contract.methods
@@ -53,16 +53,16 @@ function RequestAndPay({ requests, getNameAndBalance }) {
     const web3 = new Web3(window.ethereum); 
     const contract = new web3.eth.Contract(
       ABI,
-      "0x61E05990393693287D829363e2271D370b5F8af3"
+      contractAddr
     );
-    let stringValue = requests["1"][0];
-    console.log(stringValue)
+    const requests = await contract.methods.getMyRequests(address).call();
+    console.log(requests)
 
     await contract.methods
       .payRequest(0)
       .send({
         from: address,
-        value: stringValue
+        value: requests[1][0]
       })
       .then(function (receipt) {
         setIsRequestSuccess(true)
