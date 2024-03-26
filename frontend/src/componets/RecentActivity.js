@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Table } from "antd";
+import { Web3 } from 'web3';
 
+//private RPC endpoint 
+const web3 = new Web3('https://rpc-mumbai.maticvigil.com'); 
 
 const dataSource = [
   {
@@ -99,7 +102,7 @@ const columns = [
         style={record.type === "Send" ? { color: "red" } : { color: "green" }}
       >
         {record.type === "Send" ? "-" : "+"}
-        {record.amount} Matic
+        {web3.utils.fromWei(record.amount, "ether")} Matic
       </div>
     ),
   },

@@ -31,15 +31,16 @@ function convertArrayToObjects(arr) {
 
 app.get("/getNameAndBalance", async (req, res) => {
   const { userAddress } = req.query;
+  const contractAddr = "0x433A168d8bab2E39014E61bE95ccdBd99558E1b1"
 
   const response = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "0xe6445AdF1B0a2286b20B6C726F99A3BE889346Dc",
+    address: contractAddr,
     functionName: "getMyName",
     abi: ABI,
     params: { _user: userAddress },
   });
-
+  // console.log(response)
   const jsonResponseName = response.raw;
 
   const secResponse = await Moralis.EvmApi.balance.getNativeBalance({
@@ -59,7 +60,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fourResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "0xe6445AdF1B0a2286b20B6C726F99A3BE889346Dc",
+    address: contractAddr,
     functionName: "getMyHistory",
     abi: ABI,
     params: { _user: userAddress },
@@ -70,7 +71,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fiveResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "0x13881",
-    address: "0xe6445AdF1B0a2286b20B6C726F99A3BE889346Dc",
+    address: contractAddr,
     functionName: "getMyRequests",
     abi: ABI,
     params: { _user: userAddress },

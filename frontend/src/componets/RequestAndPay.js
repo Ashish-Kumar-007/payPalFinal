@@ -21,9 +21,10 @@ function RequestAndPay({ requests, getNameAndBalance }) {
   const [requestAmount, setRequestAmount] = useState();
   const [requestAddress, setRequestAddress] = useState("");
   const [requestMessage, setRequestMessage] = useState("");
-  const[isRequested, setIsRquested]= useState(false);
+  const [isRequested, setIsRquested]= useState(false);
   const [isRequestSuccess, setIsRequestSuccess] = useState(false);
-  const contractAddr = "0xe6445AdF1B0a2286b20B6C726F99A3BE889346Dc"
+  const [web3, setWeb3] = useState(null)
+  const contractAddr = "0x433A168d8bab2E39014E61bE95ccdBd99558E1b1"
   // const setupWeb3 = async () => {
   //   const Web3 = require("web3");
   //   if (window.ethereum) {
@@ -33,7 +34,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
   // };
 
   const sendRequest = async () => {
-    const web3 = new Web3(window.ethereum); 
+    // const web3 = new Web3(window.ethereum); 
     const contract = new web3.eth.Contract(
       ABI,
       contractAddr
@@ -50,14 +51,14 @@ function RequestAndPay({ requests, getNameAndBalance }) {
   };
 
   const payRequest = async () => {
-    const web3 = new Web3(window.ethereum); 
+    // const web3 = new Web3(window.ethereum); 
     const contract = new web3.eth.Contract(
       ABI,
       contractAddr
     );
     const requests = await contract.methods.getMyRequests(address).call();
     console.log(requests)
-
+      console.log(requests)
     await contract.methods
       .payRequest(0)
       .send({
@@ -68,6 +69,12 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         setIsRequestSuccess(true)
       });
   };
+
+  useEffect(() => {
+    if(window && window.ethereum){
+      setWeb3(new Web3(window.ethereum))
+    }
+  },[])
 
   // const { config } = usePrepareContractWrite({
   //   chainId: polygonMumbai.id,
@@ -137,7 +144,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         {requests && requests["0"].length > 0 && (
           <>
             <h2>Sending payment to {requests["3"][0]}</h2>
-            <h3>Value: {requests["1"][0]} Matic</h3>
+            <h3>Value: {web3.utils.fromWei(requests["1"][0], "ether")} Matic</h3>
             <p>"{requests["2"][0]}"</p>
           </>
         )}
