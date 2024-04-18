@@ -66,11 +66,12 @@ const { Title, Paragraph } = Typography;
 
 const data = {
   id: 1,
-  name: "John Doe",
-  designation: "Software Engineer",
-  email: "john.doe@example.com",
+  name: "Mr. Prasad S R",
+  designation: "Asst. Prof. Project Guide",
+  email: "prasad.gowda029@sdmit.in",
   image: "https://randomuser.me/api/portraits/men/1.jpg",
-  details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  details: "Mr. Prasad S R received B.E degree from VT Belagavi in 2011 and M. Tech degree from JNTU Hyderabad in 2015. His areas of interest are Deep Learning, IoT and AI.",
+  details_2 :"He is an Assistant Professor in the Department of Computer Science & Engineering at SDM Institute of Technology."
 };
 
 const teamMembers = [
@@ -111,7 +112,7 @@ const teamMembers = [
 
 const AboutUs = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: '20px', backgroundColor: '#f0f2f5', textAlign: 'center', minWidth: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: '20px', textAlign: 'center', minWidth: "100%" }}>
       <Title level={2} style={{ marginBottom: '40px' }}>About Us</Title>
       <Card style={{ width: 800, borderRadius: 10, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -122,6 +123,7 @@ const AboutUs = () => {
             <Title level={4} style={{ marginBottom: '8px' }}>{data.name}</Title>
             <Paragraph style={{ marginBottom: '8px', fontSize: '16px' }}>{data.designation}</Paragraph>
             <Paragraph style={{ marginBottom: '8px', fontSize: '16px', lineHeight: '1.6' }}>{data.details}</Paragraph>
+            <Paragraph style={{ marginBottom: '8px', fontSize: '16px', lineHeight: '1.6' }}>{data.details_2}</Paragraph>
             <Paragraph style={{ marginBottom: '8px', fontSize: '16px' }}><b>Email-ID:</b> {data.email}</Paragraph>
           </div>
         </div>

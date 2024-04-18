@@ -12,7 +12,7 @@ function Help() {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh",  display: "flex", alignItems: "center", justifyContent: "center", background: "#f0f2f5" }}>
+    <div style={{ minHeight: "100vh",  display: "flex", justifyContent: "center"}}>
       <Content className="max-w-xl mx-auto p-8">
         <Title level={2} className="mb-4">Help Section</Title>
         {step === 1 && (
@@ -76,7 +76,7 @@ function Help() {
           </div>
         )}
       </Content>
-    </Layout>
+    </div>
   );
 }
 

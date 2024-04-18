@@ -25,6 +25,7 @@ function Home({
   disconnectAndSetNull,
   getNameAndBalance,
 }) {
+  console.log("address", address);
   return (
     <>
       <div className="firstColumn">
@@ -48,7 +49,7 @@ function App() {
   const { connect } = useConnect({
     connector: new MetaMaskConnector(),
   });
-
+  console.log(address);
   const [name, setName] = useState("...");
   const [balance, setBalance] = useState("...");
   const [dollars, setDollars] = useState("...");
@@ -92,7 +93,15 @@ function App() {
         <Layout>
           <Header className="header">
             <div className="headerLeft">
-              <div style={{color: "#31579e", fontWeight: "bold", fontSize:"30px",}}>BLOCKPAY</div>
+              <div
+                style={{
+                  color: "#31579e",
+                  fontWeight: "bold",
+                  fontSize: "30px",
+                }}
+              >
+                BLOCKPAY
+              </div>
               {isConnected && (
                 <>
                   <nav>
@@ -128,7 +137,20 @@ function App() {
               <Routes>
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/help" element={<Help />} />
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      name={name}
+                      address={address}
+                      balance={balance}
+                      dollars={dollars}
+                      history={history}
+                      requests={history}
+                      getNameAndBalance={getNameAndBalance}
+                    />
+                  }
+                />
               </Routes>
             ) : (
               <div>Please Login</div>
