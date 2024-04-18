@@ -3,7 +3,10 @@
   min-height: 100vh;
 }
 
-
+nav {
+  display: flex;
+  gap: 20px;
+}
 .header {
   background-color: white;
   display: flex;

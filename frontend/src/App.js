@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.png";
 import { Layout, Button } from "antd";
@@ -9,8 +10,37 @@ import RecentActivity from "./componets/RecentActivity";
 import { useConnect, useAccount, useDisconnect } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import axios from "axios";
+import AboutUs from "./componets/AboutUs";
+import Help from "./componets/Help";
 
 const { Header, Content } = Layout;
+
+function Home({
+  name,
+  address,
+  balance,
+  dollars,
+  history,
+  requests,
+  disconnectAndSetNull,
+  getNameAndBalance,
+}) {
+  return (
+    <>
+      <div className="firstColumn">
+        <CurrentBalance dollars={dollars} />
+        <RequestAndPay
+          requests={requests}
+          getNameAndBalance={getNameAndBalance}
+        />
+        <AccountDetails address={address} name={name} balance={balance} />
+      </div>
+      <div className="secondColumn">
+        <RecentActivity history={history} />
+      </div>
+    </>
+  );
+}
 
 function App() {
   const { address, isConnected } = useAccount();
@@ -23,7 +53,7 @@ function App() {
   const [balance, setBalance] = useState("...");
   const [dollars, setDollars] = useState("...");
   const [history, setHistory] = useState(null);
-  const [requests, setRequests] = useState({ "1": [0], "0": [] });
+  const [requests, setRequests] = useState({ 1: [0], 0: [] });
 
   function disconnectAndSetNull() {
     disconnect();
@@ -31,13 +61,12 @@ function App() {
     setBalance("...");
     setDollars("...");
     setHistory(null);
-    setRequests({ "1": [0], "0": [] });
+    setRequests({ 1: [0], 0: [] });
   }
 
   async function getNameAndBalance() {
-    const res = await axios.get(`https://paypal-backend-tan.vercel.app/getNameAndBalance`, {
-      // const res = await axios.get(`http://localhost:3001/getNameAndBalance`, {
-
+    // const res = await axios.get(`https://paypal-backend-tan.vercel.app/getNameAndBalance`, {
+    const res = await axios.get(`http://localhost:3001/getNameAndBalance`, {
       params: { userAddress: address },
     });
 
@@ -50,7 +79,6 @@ function App() {
     setDollars(String(response.dollars));
     setHistory(response.history);
     setRequests(response.requests);
-    
   }
 
   useEffect(() => {
@@ -60,58 +88,54 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
-        <Header className="header">
-          <div className="headerLeft">
-            <img src={logo} alt="logo" className="logo" />
-            {isConnected && (
-              <>
-                <div
-                  className="menuOption"
-                  style={{ borderBottom: "1.5px solid black" }}
-                >
-                  Summary
-                </div>
-                <div className="menuOption">Activity</div>
-                <div className="menuOption">{`Send & Request`}</div>
-                <div className="menuOption">Wallet</div>
-                <div className="menuOption">Help</div>
-              </>
+      <BrowserRouter>
+        <Layout>
+          <Header className="header">
+            <div className="headerLeft">
+              <div style={{color: "#31579e", fontWeight: "bold", fontSize:"30px",}}>BLOCKPAY</div>
+              {isConnected && (
+                <>
+                  <nav>
+                    <Link to="/" className="p-3">
+                      Summary
+                    </Link>
+
+                    <Link to="/about-us">About us</Link>
+
+                    <Link to="/help">Help</Link>
+                  </nav>
+                </>
+              )}
+            </div>
+            {isConnected ? (
+              <Button type={"primary"} onClick={disconnectAndSetNull}>
+                Disconnect Wallet
+              </Button>
+            ) : (
+              <Button
+                type={"primary"}
+                onClick={() => {
+                  console.log(requests);
+                  connect();
+                }}
+              >
+                Connect Wallet
+              </Button>
             )}
-          </div>
-          {isConnected ? (
-            <Button type={"primary"} onClick={disconnectAndSetNull}>
-              Disconnect Wallet
-            </Button>
-          ) : (
-            <Button type={"primary"} onClick={()=>{
-              console.log(requests); connect();
-            }}>
-              Connect Wallet
-            </Button>
-          )}
-        </Header>
-        <Content className="content">
-          {isConnected ? (
-            <>
-              <div className="firstColumn">
-                <CurrentBalance dollars={dollars} />
-                <RequestAndPay requests={requests} getNameAndBalance={getNameAndBalance}/>
-                <AccountDetails
-                  address={address}
-                  name={name}
-                  balance={balance}
-                />
-              </div>
-              <div className="secondColumn">
-                <RecentActivity history={history} />
-              </div>
-            </>
-          ) : (
-            <div>Please Login</div>
-          )}
-        </Content>
-      </Layout>
+          </Header>
+          <Content className="content">
+            {isConnected ? (
+              <Routes>
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/help" element={<Help />} />
+                <Route path="/" element={<Home />} />
+              </Routes>
+            ) : (
+              <div>Please Login</div>
+            )}
+          </Content>
+        </Layout>
+      </BrowserRouter>
     </div>
   );
 }

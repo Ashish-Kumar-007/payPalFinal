@@ -15,7 +15,7 @@ function AccountDetails({ address, name, balance }) {
           <div className="accountDetailHead"> {name} </div>
           <div className="accountDetailBody">
             {" "}
-            Address: {address.slice(0, 4)}...{address.slice(38)}
+            Address: {address?.slice(0, 4)}...{address?.slice(38)}
           </div>
         </div>
       </div>
