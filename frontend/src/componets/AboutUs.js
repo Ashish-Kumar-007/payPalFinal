@@ -118,7 +118,7 @@ const AboutUs = () => {
           <div style={{ flex: 1 }}>
             <img src="https://via.placeholder.com/150" alt="Example" style={{ width: '100%', height: 'auto', borderRadius: '10px 0 0 10px' }} />
           </div>
-          <div style={{ flex: 2, padding: '0 20px' }}>
+          <div style={{ flex: 2, padding: '0 20px', textAlign: "left" }}>
             <Title level={4} style={{ marginBottom: '8px' }}>{data.name}</Title>
             <Paragraph style={{ marginBottom: '8px', fontSize: '16px' }}>{data.designation}</Paragraph>
             <Paragraph style={{ marginBottom: '8px', fontSize: '16px', lineHeight: '1.6' }}>{data.details}</Paragraph>
