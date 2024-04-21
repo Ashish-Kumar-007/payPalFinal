@@ -25,7 +25,7 @@ function Home({
   disconnectAndSetNull,
   getNameAndBalance,
 }) {
-  console.log("address", address);
+  console.log("address", address, requests, dollars);
   return (
     <>
       <div className="firstColumn">
@@ -72,11 +72,13 @@ function App() {
     });
 
     const response = res.data;
+    console.log(response)
     console.log(response.requests);
     if (response.name[1]) {
       setName(response.name[0]);
     }
-    setBalance(String(response.balance));
+    console.log(response.balance)
+    setBalance((response.balance));
     setDollars(String(response.dollars));
     setHistory(response.history);
     setRequests(response.requests);

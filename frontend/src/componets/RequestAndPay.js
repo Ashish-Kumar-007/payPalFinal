@@ -15,6 +15,7 @@ import { Web3 } from 'web3';
 // const web3 = new Web3('https://rpc-mumbai.maticvigil.com'); 
 
 function RequestAndPay({ requests, getNameAndBalance }) {
+  console.log(requests)
   const {address} = useAccount();
   const [payModal, setPayModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
@@ -24,7 +25,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
   const [isRequested, setIsRquested]= useState(false);
   const [isRequestSuccess, setIsRequestSuccess] = useState(false);
   const [web3, setWeb3] = useState(null)
-  const contractAddr = "0x433A168d8bab2E39014E61bE95ccdBd99558E1b1"
+  const contractAddr = "0xB45C70ca7f00Aa4c1dE8e9Ba4FBf285105b54Bba"
   // const setupWeb3 = async () => {
   //   const Web3 = require("web3");
   //   if (window.ethereum) {
@@ -141,7 +142,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         okText="Proceed To Pay"
         cancelText="Cancel"
       >
-        {requests && requests["0"].length > 0 && (
+        {requests && requests["0"]?.length > 0 && (
           <>
             <h2>Sending payment to {requests["3"][0]}</h2>
             <h3>Value: {web3.utils.fromWei(requests["1"][0], "ether")} Matic</h3>
@@ -160,7 +161,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         okText="Proceed To Request"
         cancelText="Cancel"
       >
-        <p>Amount (Matic)</p>
+        <p>Amount (Ether)</p>
         <InputNumber
           value={requestAmount}
           onChange={(val) => setRequestAmount(val)}
@@ -187,7 +188,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         >
           <DollarOutlined style={{ fontSize: "26px" }} />
           Pay
-          {requests && requests["0"].length > 0 && (
+          {requests && requests["0"]?.length > 0 && (
             <div className="numReqs">{requests["0"].length}</div>
           )}
         </div>

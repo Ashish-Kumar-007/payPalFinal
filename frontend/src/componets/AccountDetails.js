@@ -7,7 +7,7 @@ import { Web3 } from 'web3';
 
 function AccountDetails({ address, name, balance }) {
   const [web3, setWeb3] = useState(null)
-  const contractAddr = "0x433A168d8bab2E39014E61bE95ccdBd99558E1b1"
+  const contractAddr = "0xB45C70ca7f00Aa4c1dE8e9Ba4FBf285105b54Bba"
   const [visible, setVisible] = useState(false);
   const [userName, setUserName] = useState("");
 
@@ -53,7 +53,6 @@ function AccountDetails({ address, name, balance }) {
         <div>
           <div className="accountDetailHead"> {name} </div>
           <div className="accountDetailBody">
-            {" "}
             Address: {address?.slice(0, 4)}...{address?.slice(38)}
           </div>
         </div>
@@ -61,8 +60,8 @@ function AccountDetails({ address, name, balance }) {
       <div className="accountDetailRow">
         <img src={matic} alt="maticLogo" width={25} />
         <div>
-          <div className="accountDetailHead"> Native Matic Tokens</div>
-          <div className="accountDetailBody">{balance} Matic</div>
+          <div className="accountDetailHead"> Ether Balance</div>
+          <div className="accountDetailBody">{balance} ETH</div>
         </div>
       </div>
       <Modal
