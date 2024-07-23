@@ -31,7 +31,7 @@ function convertArrayToObjects(arr) {
 
 app.get("/getNameAndBalance", async (req, res) => {
   const { userAddress } = req.query;
-  const contractAddr = "0xB45C70ca7f00Aa4c1dE8e9Ba4FBf285105b54Bba"
+  const contractAddr = "0x2bD6c5E444A78e141540bC68Ed2E92d7e8EE86f8"
 
   const response = await Moralis.EvmApi.utils.runContractFunction({
     chain: Moralis.EvmUtils.EvmChain.BSC_TESTNET,
@@ -50,9 +50,6 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const jsonResponseBal = (secResponse.raw.balance / 1e18).toFixed(2);
 
-  // const thirResponse = await Moralis.EvmApi.token.getTokenPrice({
-  //   address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-  // });
 
   let jsonResponseDollars;
 
@@ -121,50 +118,6 @@ function convertDataToArrayOfObjects(data) {
 
   return result;
 }
-
-// app.get("/getNameAndBalance", async (req, res) => {
-//   const { userAddress } = req.query;
-//   const contractAddr = "0xC5026d20C2Aa8cA173b2F8576E5D01aBa17b4752";
-
-//   const provider = new ethers.providers.JsonRpcProvider(
-//     "https://1rpc.io/holesky"
-//   );
-
-//   const contract = new ethers.Contract(contractAddr, ABI, provider);
-
-//   const responseName = await contract.getMyName(userAddress);
-
-//   const balance = await provider.getBalance(userAddress);
-
-//   const jsonResponseBal = ethers.utils.formatEther(balance);
-
-//   console.log(jsonResponseBal.toString());
-
-//   let jsonResponseDollars;
-
-//   convertEthToUsd(jsonResponseBal.toString()).then((usdAmount) => {
-//     jsonResponseDollars = usdAmount;
-//     console.log(
-//       `${jsonResponseBal.toString()} ETH is approximately ${usdAmount} USD`
-//     );
-//   });
-
-//   const jsonResponseHistory = await contract.getMyHistory(userAddress);
-//   const formattedHistory = convertArrayToObjects(jsonResponseHistory);
-
-//   const jsonResponseRequests = await contract.getMyRequests(userAddress);
-//   console.log(convertDataToArrayOfObjects(jsonResponseRequests));
-
-//   const jsonResponse = {
-//     name: responseName,
-//     balance: jsonResponseBal,
-//     dollars: jsonResponseDollars,
-//     history: formattedHistory,
-//     requests: jsonResponseRequests,
-//   };
-
-//   return res.status(200).json(jsonResponse);
-// });
 
 async function getEthUsdPrice() {
   const provider = new ethers.providers.JsonRpcProvider(
