@@ -8,7 +8,7 @@ const ABI = require("./abi.json");
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://paypal-app.vercel.app"],
+    origin: ["http://localhost:3000", "https://paypal-app.vercel.app", "https://paypal-frontend-tau.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     headers: ["Authorization", "Content-Type"],
